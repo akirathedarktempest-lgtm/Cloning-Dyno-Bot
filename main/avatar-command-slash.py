@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
 from discord import app_commands
-import webbrowser
 import random
 
 def colorRandom():
@@ -22,12 +21,7 @@ class AButton(discord.ui.View):
     def __init__(self,link):
         self.link=link
         super().__init__()
-
-    @discord.ui.button(label="Open Browser",style=discord.ButtonStyle.secondary)
-    async def call(self,interaction:discord.Interaction,button:discord.ui.Button):
-        webbrowser.open(self.link)
-        await interaction.response.send_message("Done!",ephemeral=True)
-        await interaction.delete_original_response()
+        self.add_item(discord.ui.Button(url=self.link,style=discord.ButtonStyle.gray,label="Open Browser!"))#the correct way, the last one would run it in the device from where the bot is hosted
 
 @bot.tree.command()
 @app_commands.allowed_contexts(guilds=True,dms=True,private_channels=True)
